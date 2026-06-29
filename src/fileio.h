@@ -6,5 +6,6 @@
 int insertProduct(Product *p);
 int getProduct(const char *code, Product *out);
 int updateProductQty(const char *code, int newQty);
+int getProductCount();
 
 #endif
