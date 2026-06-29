@@ -56,3 +56,15 @@ int getProductCount() {
     fclose(fp);
     return (int)(size / sizeof(Product));
 }
+
+int getAllProducts(Product *out, int max) {
+    FILE *fp = fopen("inventory.dat", "rb");
+    if (fp == NULL) return 0;
+
+    int count = 0;
+    while (count < max && fread(&out[count], sizeof(Product), 1, fp) == 1) {
+        count++;
+    }
+    fclose(fp);
+    return count;
+}
