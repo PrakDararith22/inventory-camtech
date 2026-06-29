@@ -87,3 +87,16 @@ void generateCode(char *outCode) {
     maxNum++;
     sprintf(outCode, "PRD%03d", maxNum);
 }
+
+void appendLog(const char *action, const char *code, int qty) {
+    FILE *fp = fopen("transactions.log", "a");
+    if (fp == NULL) return;
+
+    time_t t = time(NULL);
+    struct tm *tmInfo = localtime(&t);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", tmInfo);
+
+    fprintf(fp, "[%s] %s code=%s qty=%d\n", timestamp, action, code, qty);
+    fclose(fp);
+}
