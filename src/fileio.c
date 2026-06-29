@@ -100,3 +100,17 @@ void appendLog(const char *action, const char *code, int qty) {
     fprintf(fp, "[%s] %s code=%s qty=%d\n", timestamp, action, code, qty);
     fclose(fp);
 }
+
+void viewLog() {
+    FILE *fp = fopen("transactions.log", "r");
+    if (fp == NULL) {
+        printf("No transactions recorded.\n");
+        return;
+    }
+
+    char line[256];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("%s", line);
+    }
+    fclose(fp);
+}
