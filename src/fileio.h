@@ -4,5 +4,6 @@
 #include "inventory.h"
 
 int insertProduct(Product *p);
+int getProduct(const char *code, Product *out);
 
 #endif

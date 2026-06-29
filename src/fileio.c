@@ -12,3 +12,19 @@ int insertProduct(Product *p) {
     fclose(fp);
     return written == 1;
 }
+
+int getProduct(const char *code, Product *out) {
+    FILE *fp = fopen("inventory.dat", "rb");
+    if (fp == NULL) return 0;
+
+    Product p;
+    while (fread(&p, sizeof(Product), 1, fp) == 1) {
+        if (strcmp(p.code, code) == 0) {
+            *out = p;
+            fclose(fp);
+            return 1;
+        }
+    }
+    fclose(fp);
+    return 0;
+}
