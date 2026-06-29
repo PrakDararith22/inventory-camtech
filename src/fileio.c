@@ -68,3 +68,22 @@ int getAllProducts(Product *out, int max) {
     fclose(fp);
     return count;
 }
+
+void generateCode(char *outCode) {
+    FILE *fp = fopen("inventory.dat", "rb");
+    if (fp == NULL) {
+        strcpy(outCode, "PRD001");
+        return;
+    }
+
+    int maxNum = 0;
+    Product p;
+    while (fread(&p, sizeof(Product), 1, fp) == 1) {
+        int num = atoi(p.code + 3);
+        if (num > maxNum) maxNum = num;
+    }
+    fclose(fp);
+
+    maxNum++;
+    sprintf(outCode, "PRD%03d", maxNum);
+}
