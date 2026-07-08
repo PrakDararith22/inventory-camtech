@@ -7,12 +7,13 @@
   INVENTORY MANAGEMENT SYSTEM
          - CAMTECH -
 ====================================
-  Group Members:
-  1. Person 1 - File DB SDK
-  2. Person 2 - Add & Search
-  3. Person 3 - Stock In & Out
-  4. Person 4 - Reports & Audit
-  5. Person 5 - Main Menu & Utils
+   Group Members:
+   1. Thina  - File DB SDK
+   2. Lida   - Add Product
+   3. Samrith - Stock In & Out
+   4. Kelly  - Search Product
+   5. Lado   - Reports
+   6. Rith   - Main Menu, Audit & Utils
 ====================================
 
 ====================================
@@ -201,8 +202,8 @@ Console-based C application for product inventory management. Supports stock-in/
 
 The program has four layers:
 
-- FR5 (UI/Menu) in main.c — menu loop, input validation, utility functions
-- FR2, FR3, FR4 in features.c — adding products, stock movements, search, and reports
+- FR6 (UI/Menu & Audit) in main.c — menu loop, input validation, utility functions, audit viewer
+- FR2, FR3, FR4, FR5 in individual files — add products, stock movements, search, and reports
 - FR1 (Database SDK) in file_db.c — the only module that opens, reads, writes, or closes files
 - Data files — inventory.dat (binary product records) and transactions.log (text audit trail)
 
@@ -212,20 +213,30 @@ The program has four layers:
 
 | File | Who writes | Purpose |
 |------|-----------|---------|
-| inventory.h | FR5 | Product structure definition and constants |
-| utils.h, utils.c | FR5 | Input reading utilities used by all features |
-| features.h | FR5 | Function prototypes for all feature functions |
+| inventory.h | FR6 | Product structure definition and constants |
+| utils.h, utils.c | FR6 | Input reading utilities used by all features |
+| features.h | FR6 | Master include header for all feature headers |
+| add_product.h, add_product.c | FR2 | Add Product implementation |
+| stock.h, stock.c | FR3 | Stock In/Out implementation |
+| search.h, search.c | FR4 | Search Product implementation |
+| reports.h, reports.c | FR5 | Reports implementation |
+| audit.h, audit.c | FR6 | Audit Viewer implementation |
 | file_db.h | FR1 | Database SDK function prototypes |
 | file_db.c | FR1 | Database SDK implementation |
+| add_product.h, add_product.c | FR2 | Add Product implementation |
+| stock.h, stock.c | FR3 | Stock In/Out implementation |
+| search.h, search.c | FR4 | Search Product implementation |
+| reports.h, reports.c | FR5 | Reports implementation |
+| audit.h, audit.c | FR6 | Audit Viewer implementation |
 
 ---
 
 ## Integration Order
 
-1. FR5 creates the shared headers inventory.h, utils.h, utils.c, and features.h
+1. FR6 creates the shared headers inventory.h, utils.h, utils.c, and features.h
 2. FR1 creates file_db.h and file_db.c with all 8 database methods
-3. FR2, FR3, and FR4 write their feature functions in features.c (can work in parallel)
-4. FR5 creates main.c, Makefile, and CMakeLists.txt, then compiles and tests
+3. FR2, FR3, FR4, and FR5 write their feature functions in their own files (can work in parallel)
+4. FR6 creates main.c, audit.h, audit.c, Makefile, and CMakeLists.txt, then compiles and tests
 
 ---
 
@@ -330,53 +341,67 @@ Validation examples:
 
 ---
 
-## FR4 — Reports and Audit Viewer
+## FR4 — Search Product
 
-Person 4 writes into features.c. This feature generates reports and displays the audit log. It calls FR1 methods to retrieve all products and to view the audit log.
+Kelly writes search.h and search.c. This feature handles searching for existing products by code or by partial name. It calls FR1 methods to retrieve a single product by code or to retrieve all products. It uses shared utility functions for reading strings, integers, and converting text to lowercase.
 
-### Task 4.1 — Low Stock Report
+### Task 4.1 — Search Product
 
-Retrieves all products from the data file using FR1. If there are no products, prints a message and returns. Otherwise displays a table header with columns for code, name, quantity, minimum stock, and status. Loops through all products and prints those whose quantity is below their minimum stock threshold with a status label indicating LOW STOCK. If no products are below their minimum, prints All products are adequately stocked.
+Displays a header message and asks the user to choose between searching by code or by name.
 
-### Task 4.2 — Inventory Value Report
+If searching by code, the user enters a product code and FR1 looks it up. If found, the product details are displayed in a formatted table. If not found, prints Product not found.
 
-Retrieves all products from the data file using FR1. If there are no products, prints a message and returns. Otherwise displays a table with columns for code, name, quantity, unit price, and total value, where the total value is the product of quantity and unit price. Calculates a grand total by adding up all line totals. Displays the grand total below the table. Then prints a separate low-stock warnings section showing each product that is below its minimum threshold along with its current and minimum quantities.
-
-### Task 4.3 — View Audit Log
-
-Displays a header message and calls FR1 to read and display the entire audit log from transactions.log.
+If searching by name, the user enters a full or partial product name. FR1 retrieves all products from the data file. The search term and each product name are converted to lowercase for case-insensitive comparison. Each product whose name contains the search term is displayed in a formatted table. If no matches are found, prints No matching products found.
 
 ---
 
-## FR5 — Main Menu and System Integration
+## FR5 — Reports
 
-Person 5 writes main.c, Makefile, CMakeLists.txt, inventory.h, features.h, utils.h, and utils.c. This feature provides the program entry point, the menu display, shared input utility functions, the build system, and all shared header files.
+Lado writes reports.h and reports.c. This feature generates reports about inventory status. It calls FR1 methods to retrieve all products.
 
-### Task 5.1 — Display Menu
+### Task 5.1 — Low Stock Report
+
+Retrieves all products from the data file using FR1. If there are no products, prints a message and returns. Otherwise displays a table header with columns for code, name, quantity, minimum stock, and status. Loops through all products and prints those whose quantity is below their minimum stock threshold with a status label indicating LOW STOCK. If no products are below their minimum, prints All products are adequately stocked.
+
+### Task 5.2 — Inventory Value Report
+
+Retrieves all products from the data file using FR1. If there are no products, prints a message and returns. Otherwise displays a table with columns for code, name, quantity, unit price, and total value, where the total value is the product of quantity and unit price. Calculates a grand total by adding up all line totals. Displays the grand total below the table. Then prints a separate low-stock warnings section showing each product that is below its minimum threshold along with its current and minimum quantities.
+
+---
+
+## FR6 — Main Menu, Audit Viewer, Utilities, and System Integration
+
+Rith writes main.c, audit.h, audit.c, utils.h, utils.c, inventory.h, features.h, Makefile, and CMakeLists.txt. This feature provides the program entry point, the menu display, shared input utility functions, the audit log viewer, the build system, and all shared header files.
+
+### Task 6.1 — Display Menu
 
 Prints a formatted menu showing eight options: add product, stock in, stock out, search product, low stock report, inventory value, view audit log, and exit.
 
-### Task 5.2 — Main Entry Point
+### Task 6.2 — Main Entry Point
 
-Prints the project banner with group member names. Then repeatedly displays the menu and reads the user's choice. Based on the choice, it dispatches to the appropriate feature function from FR2, FR3, or FR4. Exits the program when the user selects option 8. If the user enters a number outside 1 to 8, prints Invalid choice. Enter 1-8 and re-prompts.
+Prints the project banner with group member names. Then repeatedly displays the menu and reads the user's choice. Based on the choice, it dispatches to the appropriate feature function from FR2, FR3, FR4, or FR5. Exits the program when the user selects option 8. If the user enters a number outside 1 to 8, prints Invalid choice. Enter 1-8 and re-prompts.
 
 Validation examples:
 - Non-numeric input like abc: prints Invalid input and re-prompts
 - Number outside range like 9: prints Invalid choice. Enter 1-8 and re-prompts
 
-### Task 5.3 to 5.6 — Utility Functions
+### Task 6.3 — View Audit Log
+
+Displays a header message and calls FR1 to read and display the entire audit log from transactions.log.
+
+### Task 6.4 to 6.7 — Utility Functions
 
 Provides four shared utility functions used by all features. The integer input function displays a prompt, reads a line using fgets, parses it with sscanf, and returns the integer value. If the input is not a valid integer, prints Invalid input and re-prompts. The float input function works the same way but parses a floating-point number, re-prompting on invalid input. The read string function displays a prompt, reads a line with fgets, and removes the trailing newline character. The lowercase conversion function copies a source string to a destination string converting each character to lowercase.
 
-### Task 5.7 — Build System
+### Task 6.8 — Build System
 
-Provides a Makefile and CMakeLists.txt that compile the project. The main.c source file is located in a src directory and includes the utilities header file from the parent directory. The build system compiles main.c, file_db.c, features.c, and utils.c, and links them into an executable called inventory. Targets are provided for building, running, and cleaning up.
+Provides a Makefile and CMakeLists.txt that compile the project. The main.c source file is located in a src directory and includes the utilities header file from the parent directory. The build system compiles main.c, file_db.c, add_product.c, stock.c, search.c, reports.c, audit.c, and utils.c, and links them into an executable called inventory. Targets are provided for building, running, and cleaning up.
 
 ---
 
 ## Complete Function Call Map
 
-The main function in FR5 calls feature functions from FR2, FR3, and FR4. Each feature function calls one or more database methods from FR1. FR1 methods are the only ones that directly access the data files.
+The main function in FR6 calls feature functions from FR2, FR3, FR4, and FR5. Each feature function calls one or more database methods from FR1. FR1 methods are the only ones that directly access the data files.
 
 Add product calls FR1 to generate a code, insert the product, and append to the audit log. Stock in and stock out both call FR1 to get the product, update its quantity, and append to the audit log. Search product calls FR1 to get a single product by code or to get all products. Low stock report and inventory value both call FR1 to get all products. View audit log calls FR1 to display the log.
 
@@ -386,17 +411,18 @@ Add product calls FR1 to generate a code, insert the product, and append to the 
 
 | Feature | Person | Files | Tasks |
 |---------|--------|-------|-------|
-| FR1 | 1 | file_db.h, file_db.c | 8 tasks (insert, get, update, list all, count, generate code, append log, view log) |
-| FR2 | 2 | features.c | 2 tasks (add product, search product) |
-| FR3 | 3 | features.c | 2 tasks (stock in, stock out) |
-| FR4 | 4 | features.c | 3 tasks (low stock report, inventory value, view audit log) |
-| FR5 | 5 | main.c, Makefile, CMakeLists.txt, inventory.h, features.h, utils.h, utils.c | 7 tasks (menu display, main loop, 4 utilities, build system) |
+| FR1 | Thina | file_db.h, file_db.c | 8 tasks (insert, get, update, list all, count, generate code, append log, view log) |
+| FR2 | Lida | add_product.h, add_product.c | 1 task (add product) |
+| FR3 | Samrith | stock.h, stock.c | 2 tasks (stock in, stock out) |
+| FR4 | Kelly | search.h, search.c | 1 task (search product) |
+| FR5 | Lado | reports.h, reports.c | 2 tasks (low stock report, inventory value) |
+| FR6 | Rith | main.c, audit.h, audit.c, utils.h, utils.c, inventory.h, features.h, Makefile, CMakeLists.txt | 8 tasks (menu display, main loop, view audit log, 4 utilities, build system) |
 
 ---
 
 ## Program Run Example
 
-When the program starts, it displays a banner listing the project title and the five group members. It then shows the main menu with eight options. The user selects options by typing the corresponding number.
+When the program starts, it displays a banner listing the project title and the six group members. It then shows the main menu with eight options. The user selects options by typing the corresponding number.
 
 If the user selects option 1 to add a product, the program generates a code like PRD001 and displays it. The user then enters the product name, quantity, price, and minimum stock level. After all values are entered and validated, the program saves the product and confirms success.
 

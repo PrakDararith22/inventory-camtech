@@ -24,11 +24,12 @@ int main() {
     printf("         - CAMTECH -\n");
     printf("====================================\n");
     printf("  Group Members:\n");
-    printf("  1. Person 1 - File DB SDK\n");
-    printf("  2. Person 2 - Add & Search\n");
-    printf("  3. Person 3 - Stock In & Out\n");
-    printf("  4. Person 4 - Reports & Audit\n");
-    printf("  5. Person 5 - Main Menu & Utils\n");
+    printf("  1. Thina  - File DB SDK\n");
+    printf("  2. Lida   - Add Product\n");
+    printf("  3. Samrith - Stock In & Out\n");
+    printf("  4. Kelly  - Search Product\n");
+    printf("  5. Lado   - Reports\n");
+    printf("  6. Rith   - Main Menu, Audit & Utils\n");
     printf("====================================\n");
 
     int choice;

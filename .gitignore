@@ -1,6 +1,11 @@
 *.o
 *.out
+*.exe
+*.obj
+*.dll
 build/
 inventory
+inventory.exe
 inventory.dat
 transactions.log
+*.log
