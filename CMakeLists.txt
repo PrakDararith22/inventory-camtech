@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 add_executable(inventory
     src/main.c
-    file_db.c
-    features.c
+    src/fileio.c
+    src/utils.c
+    src/features.c
 )

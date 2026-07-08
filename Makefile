@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Isrc
-SRC = src/main.c src/fileio.c src/utils.c
+CFLAGS = -Wall -Wextra
+SRC = src/main.c src/fileio.c src/utils.c src/features.c
 OBJ = $(SRC:.c=.o)
 
 inventory: $(OBJ)

@@ -72,15 +72,14 @@ inventory-camtech/
 ├── Makefile
 ├── feature.md
 ├── .gitignore
-├── inventory.h         ← struct Product, constants
-├── file_db.h           ← DB SDK prototypes
-├── file_db.c           ← DB SDK implementation (all file I/O)
-├── utils.h             ← Utility function prototypes
-├── utils.c             ← Utility function implementations
-├── features.h          ← Feature function prototypes
-├── features.c          ← Feature implementations
 ├── src/
-│   └── main.c          ← Entry point, menu loop
+│   ├── main.c          ← Entry point, menu loop
+│   ├── fileio.h        ← DB SDK prototypes
+│   ├── fileio.c        ← DB SDK implementation (all file I/O)
+│   ├── utils.h         ← Utility function prototypes
+│   ├── utils.c         ← Utility function implementations
+│   ├── features.h      ← Feature function prototypes
+│   └── features.c      ← Feature implementations
 ├── inventory.dat       ← Generated binary product data
 └── transactions.log    ← Generated audit trail
 ```
