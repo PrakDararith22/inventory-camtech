@@ -73,13 +73,17 @@ inventory-camtech/
 ├── feature.md
 ├── .gitignore
 ├── src/
-│   ├── main.c          ← Entry point, menu loop
-│   ├── fileio.h        ← DB SDK prototypes
-│   ├── fileio.c        ← DB SDK implementation (all file I/O)
-│   ├── utils.h         ← Utility function prototypes
-│   ├── utils.c         ← Utility function implementations
-│   ├── features.h      ← Feature function prototypes
-│   └── features.c      ← Feature implementations
+│   ├── main.c          ← FR6: Entry point, menu loop
+│   ├── fileio.h        ← FR1: DB SDK prototypes
+│   ├── fileio.c        ← FR1: DB SDK implementation (all file I/O)
+│   ├── utils.h         ← FR6: Utility function prototypes
+│   ├── utils.c         ← FR6: Utility function implementations
+│   ├── features.h       ← FR6: Master include header
+│   ├── add_product.h/c  ← FR2: Add Product
+│   ├── stock.h/c       ← FR3: Stock In & Out
+│   ├── search.h/c      ← FR4: Search Product
+│   ├── reports.h/c     ← FR5: Reports
+│   └── audit.h/c       ← FR6: Audit Viewer
 ├── inventory.dat       ← Generated binary product data
 └── transactions.log    ← Generated audit trail
 ```
@@ -88,11 +92,12 @@ inventory-camtech/
 
 | Person | Feature | Responsibility |
 |--------|---------|----------------|
-| 1 | FR1 | Database SDK — all file I/O (insert, get, update, log) |
-| 2 | FR2 | Add product + search product |
-| 3 | FR3 | Stock in + stock out with validation |
-| 4 | FR4 | Low-stock report, inventory value, view audit log |
-| 5 | FR5 | Main menu, input utilities, Makefile, CMakeLists.txt |
+| Thina | FR1 | Database SDK — all file I/O (insert, get, update, log) |
+| Lida | FR2 | Add Product |
+| Samrith | FR3 | Stock in + stock out with validation |
+| Kelly | FR4 | Search Product by code or name |
+| Lado | FR5 | Low-stock report + inventory value |
+| Rith | FR6 | Main menu, audit viewer, input utilities, Makefile, CMakeLists.txt |
 
 ## Deliverables
 

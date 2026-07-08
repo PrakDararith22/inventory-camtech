@@ -8,5 +8,9 @@ add_executable(inventory
     src/main.c
     src/fileio.c
     src/utils.c
-    src/features.c
+    src/add_product.c
+    src/stock.c
+    src/search.c
+    src/reports.c
+    src/audit.c
 )
