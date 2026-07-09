@@ -75,15 +75,15 @@ inventory-camtech/
 ├── src/
 │   ├── main.c          ← FR6: Entry point, menu loop
 │   ├── fileio.h        ← FR1: DB SDK prototypes
-│   ├── fileio.c        ← FR1: DB SDK implementation (all file I/O)
+│   ├── fileio.c        ← FR1: DB SDK implementation (core binary DB)
 │   ├── utils.h         ← FR6: Utility function prototypes
-│   ├── utils.c         ← FR6: Utility function implementations
+│   ├── utils.c         ← FR2/FR3/FR4: Shared utility implementations
 │   ├── features.h       ← FR6: Master include header
-│   ├── add_product.h/c  ← FR2: Add Product
-│   ├── stock.h/c       ← FR3: Stock In & Out
-│   ├── search.h/c      ← FR4: Search Product
-│   ├── reports.h/c     ← FR5: Reports
-│   └── audit.h/c       ← FR6: Audit Viewer
+│   ├── add_product.h/c  ← FR2: Add Product, Gen Code, Append Log, Read Float
+│   ├── stock.h/c       ← FR3: Stock In/Out, Count Products, Read Int
+│   ├── search.h/c      ← FR4: Search Product, Read String, To Lower
+│   ├── reports.h/c     ← FR5: Reports, Audit Viewer
+│   └── audit.h/c       ← FR4: Audit Log file operations
 ├── inventory.dat       ← Generated binary product data
 └── transactions.log    ← Generated audit trail
 ```
@@ -92,12 +92,12 @@ inventory-camtech/
 
 | Person | Feature | Responsibility |
 |--------|---------|----------------|
-| Thina | FR1 | Database SDK — all file I/O (insert, get, update, log) |
-| Lida | FR2 | Add Product |
-| Samrith | FR3 | Stock in + stock out with validation |
-| Kelly | FR4 | Search Product by code or name |
-| Lado | FR5 | Low-stock report + inventory value |
-| Rith | FR6 | Main menu, audit viewer, input utilities, Makefile, CMakeLists.txt |
+| Thina | FR1 | Database SDK — core binary DB ops (insert, get by code, update qty, get all) |
+| Lida | FR2 | Add Product, Generate Product Code, Append Audit Log, Read Float |
+| Samrith | FR3 | Stock In/Out, Count Products, Read Integer |
+| Kelly | FR4 | Search Product, View Audit Log (file ops), Read String, To Lower |
+| Lado | FR5 | Low-stock report, inventory value, View Audit Log (UI), Build system |
+| Rith | FR6 | Main menu, program entry point, shared header files |
 
 ## Deliverables
 
