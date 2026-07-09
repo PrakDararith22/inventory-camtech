@@ -69,6 +69,6 @@ void inventoryValue() {
             printf("  %s (%s): %d remaining (min: %d)\n",
                    products[i].code, products[i].name,
                    products[i].quantity, products[i].minStock);
-        }
-    }
+      } 
+   }                 
 }
