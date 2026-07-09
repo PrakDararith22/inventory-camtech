@@ -43,3 +43,13 @@ int getProduct(const char *code, Product *out) {
     fclose(fp);
     return 0;
 }
+
+int getProductCount() {
+    FILE *fp = fopen("inventory.dat", "rb");
+    if (fp == NULL) return 0;
+
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    fclose(fp);
+    return (int)(size / sizeof(Product));
+}
