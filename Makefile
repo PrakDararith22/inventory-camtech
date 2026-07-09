@@ -1,6 +1,6 @@
 CC ?= gcc
 CFLAGS ?= -Wall -Wextra
-SRC = src/main.c src/fileio.c src/utils.c src/features.c
+SRC = src/main.c src/fileio.c src/utils.c src/add_product.c src/stock.c src/search.c src/reports.c src/audit.c
 OBJ = $(SRC:.c=.o)
 
 ifeq ($(OS),Windows_NT)
