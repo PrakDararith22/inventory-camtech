@@ -3,6 +3,7 @@
 #include "stock.h"
 #include "search.h"
 #include "report.h"
+#include "audit.h"
 
 void displayMenu();
 
@@ -19,10 +20,11 @@ int main() {
         case 4: searchProduct(); break;
         case 5: lowStockReport(); break;
         case 6: inventoryValue(); break;
-        case 7: printf("Exiting... Goodbye!\n"); break;
-        default: printf("Invalid choice. Enter 1-7.\n");
+        case 7: viewAuditLog(); break;
+        case 8: printf("Exiting... Goodbye!\n"); break;
+        default: printf("Invalid choice. Enter 1-8.\n");
         }
-    } while (choice != 7);
+    } while (choice != 8);
     return 0;
 }
 
@@ -37,7 +39,8 @@ void displayMenu() {
     printf("4. Search Product\n");
     printf("5. Low Stock Report\n");
     printf("6. Inventory Value\n");
-    printf("7. Exit\n");
+    printf("7. View Audit Log\n");
+    printf("8. Exit\n");
     printf("------------------------------------\n");
     printf("Enter your choice: ");
 }
