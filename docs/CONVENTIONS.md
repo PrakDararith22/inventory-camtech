@@ -20,7 +20,8 @@ fix/        — bug fixes
 - `feature/fr2-product-crud`
 - `feature/fr3-stock-movement`
 - `feature/fr4-reports`
-- `feature/fr5-main-menu`
+- `feature/fr5-reports`
+- `feature/fr6-audit-utils`
 - `fix/stock-out-negative-qty`
 - `fix/search-crash-empty`
 

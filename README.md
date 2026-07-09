@@ -6,8 +6,9 @@ A console-based C application to manage product stock-in/stock-out, monitor low-
 
 ## Documentation
 
-- [feature.md](feature.md) — Feature requirements, task distribution, and user flow
-- [CONVENTIONS.md](CONVENTIONS.md) — Branching strategy, naming conventions, commit format, code style
+- [docs/feature.md](docs/feature.md) — Feature requirements, task distribution, and user flow
+- [docs/CONVENTIONS.md](docs/CONVENTIONS.md) — Branching strategy, naming conventions, commit format, code style
+- [docs/feature.md](docs/feature.md) — Per-user flowcharts in the "User Flowcharts" section (Thina, Lida, Samrith, Kelly, Lado, Rith)
 
 ## Build Instructions
 
@@ -72,15 +73,18 @@ inventory-camtech/
 ├── Makefile
 ├── feature.md
 ├── .gitignore
-├── inventory.h         ← struct Product, constants
-├── file_db.h           ← DB SDK prototypes
-├── file_db.c           ← DB SDK implementation (all file I/O)
-├── utils.h             ← Utility function prototypes
-├── utils.c             ← Utility function implementations
-├── features.h          ← Feature function prototypes
-├── features.c          ← Feature implementations
 ├── src/
-│   └── main.c          ← Entry point, menu loop
+│   ├── main.c          ← FR6: Entry point, menu loop
+│   ├── fileio.h        ← FR1: DB SDK prototypes
+│   ├── fileio.c        ← FR1: DB SDK implementation (core binary DB)
+│   ├── utils.h         ← FR6: Utility function prototypes
+│   ├── utils.c         ← FR2/FR3/FR4: Shared utility implementations
+│   ├── features.h       ← FR6: Master include header
+│   ├── add_product.h/c  ← FR2: Add Product, Gen Code, Append Log, Read Float
+│   ├── stock.h/c       ← FR3: Stock In/Out, Count Products, Read Int
+│   ├── search.h/c      ← FR4: Search Product, Read String, To Lower
+│   ├── reports.h/c     ← FR5: Reports, Audit Viewer
+│   └── audit.h/c       ← FR4: Audit Log file operations
 ├── inventory.dat       ← Generated binary product data
 └── transactions.log    ← Generated audit trail
 ```
@@ -89,11 +93,12 @@ inventory-camtech/
 
 | Person | Feature | Responsibility |
 |--------|---------|----------------|
-| 1 | FR1 | Database SDK — all file I/O (insert, get, update, log) |
-| 2 | FR2 | Add product + search product |
-| 3 | FR3 | Stock in + stock out with validation |
-| 4 | FR4 | Low-stock report, inventory value, view audit log |
-| 5 | FR5 | Main menu, input utilities, Makefile, CMakeLists.txt |
+| Thina | FR1 | Database SDK — core binary DB ops (insert, get by code, update qty, get all) |
+| Lida | FR2 | Add Product, Generate Product Code, Append Audit Log, Read Float |
+| Samrith | FR3 | Stock In/Out, Count Products, Read Integer |
+| Kelly | FR4 | Search Product, View Audit Log (file ops), Read String, To Lower |
+| Lado | FR5 | Low-stock report, inventory value, View Audit Log (UI), Build system |
+| Rith | FR6 | Main menu, program entry point, shared header files |
 
 ## Deliverables
 
