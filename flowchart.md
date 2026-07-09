@@ -1,88 +1,116 @@
 # Inventory Management System Flowchart
 
+## 1. Main flow
+
 ```mermaid
 flowchart TD
-    A["Start main"] --> B["Display welcome banner"]
-    B --> C["Show main menu"]
-    C --> D{"User choice"}
+    A["Start"] --> B["Show menu"]
+    B --> C{"Choose option"}
+    C -->|1| D["Add product"]
+    C -->|2| E["Stock in"]
+    C -->|3| F["Stock out"]
+    C -->|4| G["Search product"]
+    C -->|5| H["Low stock report"]
+    C -->|6| I["Inventory value"]
+    C -->|7| J["View audit log"]
+    C -->|8| K["Exit"]
 
-    D -->|1| E["Add product"]
-    D -->|2| F["Stock in"]
-    D -->|3| G["Stock out"]
-    D -->|4| H["Search product"]
-    D -->|5| I["Low stock report"]
-    D -->|6| J["Inventory value"]
-    D -->|7| K["View audit log"]
-    D -->|8| L["Exit program"]
+    D --> B
+    E --> B
+    F --> B
+    G --> B
+    H --> B
+    I --> B
+    J --> B
+```
 
-    E --> E1["Generate product code"]
-    E1 --> E2["Read product name"]
-    E2 --> E3["Read quantity"]
-    E3 --> E4["Read price"]
-    E4 --> E5["Read minimum stock"]
-    E5 --> E6["Insert product"]
-    E6 --> E7["Append log"]
-    E7 --> C
+## 2. Add product flow
 
-    F --> F1["Read product code"]
-    F1 --> F2["Find product"]
-    F2 -->|Found| F3["Read quantity to add"]
-    F2 -->|Not found| F4["Show not found"]
-    F3 --> F5["Update quantity"]
-    F5 --> F6["Update product file"]
-    F6 --> F7["Append log"]
-    F4 --> C
-    F7 --> C
+```mermaid
+flowchart TD
+    A["Start addProduct"] --> B["Generate code"]
+    B --> C["Enter name"]
+    C --> D["Enter quantity"]
+    D --> E["Enter price"]
+    E --> F["Enter minimum stock"]
+    F --> G["Save product"]
+    G --> H["Write audit log"]
+    H --> I["Done"]
+```
 
-    G --> G1["Read product code"]
-    G1 --> G2["Find product"]
-    G2 -->|Found| G3["Read quantity to remove"]
-    G2 -->|Not found| G4["Show not found"]
-    G3 --> G5["Validate stock availability"]
-    G5 --> G6["Update quantity"]
-    G6 --> G7["Update product file"]
-    G7 --> G8["Append log"]
-    G4 --> C
-    G8 --> C
+## 3. Stock in flow
 
-    H --> H1{"Search by"}
-    H1 -->|Code| H2["Read code"]
-    H2 --> H3["Find product"]
-    H3 -->|Found| H4["Display product"]
-    H3 -->|Not found| H5["Show not found"]
-    H1 -->|Name| H6["Read name search term"]
-    H6 --> H7["Read all products"]
-    H7 --> H8["Match name pattern"]
-    H8 --> H9["Display matching products"]
-    H4 --> C
-    H5 --> C
-    H9 --> C
+```mermaid
+flowchart TD
+    A["Start stockIn"] --> B["Enter product code"]
+    B --> C{"Product found?"}
+    C -->|No| D["Show not found"]
+    C -->|Yes| E["Enter quantity to add"]
+    E --> F["Update stock"]
+    F --> G["Write audit log"]
+    G --> H["Done"]
+    D --> I["Back to menu"]
+```
 
-    I --> I1["Read all products"]
-    I1 --> I2["Find items below minimum stock"]
-    I2 --> I3["Display low stock report"]
-    I3 --> C
+## 4. Stock out flow
 
-    J --> J1["Read all products"]
-    J1 --> J2["Compute total value per product"]
-    J2 --> J3["Show grand total and warnings"]
-    J3 --> C
+```mermaid
+flowchart TD
+    A["Start stockOut"] --> B["Enter product code"]
+    B --> C{"Product found?"}
+    C -->|No| D["Show not found"]
+    C -->|Yes| E["Enter quantity to remove"]
+    E --> F{"Enough stock?"}
+    F -->|No| G["Show error"]
+    F -->|Yes| H["Update stock"]
+    H --> I["Write audit log"]
+    I --> J["Done"]
+    G --> K["Back to menu"]
+    D --> K
+```
 
-    K --> K1["View transaction log"]
-    K1 --> C
+## 5. Search product flow
 
-    E6 --> M["inventory.dat"]
-    F6 --> M
-    G7 --> M
-    H3 --> M
-    H7 --> M
-    I1 --> M
-    J1 --> M
+```mermaid
+flowchart TD
+    A["Start searchProduct"] --> B{"Search by code or name"}
+    B -->|Code| C["Enter code"]
+    B -->|Name| D["Enter name"]
+    C --> E["Find product"]
+    D --> F["Search all products"]
+    E --> G{"Found?"}
+    F --> H{"Match found?"}
+    G -->|Yes| I["Display product"]
+    G -->|No| J["Show not found"]
+    H -->|Yes| K["Display matches"]
+    H -->|No| L["Show no matches"]
+    I --> M["Done"]
+    J --> M
+    K --> M
+    L --> M
+```
 
-    E7 --> N["transactions.log"]
-    F7 --> N
-    G8 --> N
-    K1 --> N
+## 6. Reports flow
+
+```mermaid
+flowchart TD
+    A["Start report"] --> B["Read all products"]
+    B --> C{"Report type"}
+    C -->|Low stock| D["Find below minimum stock"]
+    C -->|Inventory value| E["Calculate value of each product"]
+    D --> F["Display report"]
+    E --> G["Show total value"]
+    F --> H["Done"]
+    G --> H
+```
+
+## 7. Audit log flow
+
+```mermaid
+flowchart TD
+    A["Start audit view"] --> B["Read transaction log"]
+    B --> C["Display log"]
+    C --> D["Done"]
 ```
 
 ## Module overview
@@ -94,4 +122,3 @@ flowchart TD
 - Reports: [src/reports.c](src/reports.c)
 - Audit log: [src/audit.c](src/audit.c)
 - File operations: [src/fileio.c](src/fileio.c)
-a
