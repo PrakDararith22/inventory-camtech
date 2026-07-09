@@ -46,3 +46,4 @@ void addProduct() {
         printf("Failed to add product.\n");
     }
 }
+
