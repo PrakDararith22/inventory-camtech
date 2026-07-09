@@ -79,3 +79,35 @@ int getAllProducts(Product *out, int max) {
     fclose(fp);
     return count;
 }
+
+void generateCode(char *outCode) {
+    FILE *fp = fopen("inventory.dat", "rb");
+    if (fp == NULL) {
+        strcpy(outCode, "PRD001");
+        return;
+    }
+
+    int maxNum = 0;
+    Product p;
+    while (fread(&p, sizeof(Product), 1, fp) == 1) {
+        int num = atoi(p.code + 3);
+        if (num > maxNum) maxNum = num;
+    }
+    fclose(fp);
+
+    maxNum++;
+    sprintf(outCode, "PRD%03d", maxNum);
+}
+
+void appendLog(const char *action, const char *code, int qty) {
+    FILE *fp = fopen("transactions.log", "a");
+    if (fp == NULL) return;
+
+    time_t t = time(NULL);
+    struct tm *tmInfo = localtime(&t);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", tmInfo);
+
+    fprintf(fp, "[%s] %s code=%s qty=%d\n", timestamp, action, code, qty);
+    fclose(fp);
+}
