@@ -4,22 +4,28 @@
 #include <time.h>
 #include "fileio.h"
 
-int insertProduct(Product *p) {
+int insertProduct(Product *p)
+{
     FILE *fp = fopen("inventory.dat", "ab");
-    if (fp == NULL) return 0;
+    if (fp == NULL)
+        return 0;
 
     int written = fwrite(p, sizeof(Product), 1, fp);
     fclose(fp);
     return written == 1;
 }
 
-int getProduct(const char *code, Product *out) {
+int getProduct(const char *code, Product *out)
+{
     FILE *fp = fopen("inventory.dat", "rb");
-    if (fp == NULL) return 0;
+    if (fp == NULL)
+        return 0;
 
     Product p;
-    while (fread(&p, sizeof(Product), 1, fp) == 1) {
-        if (strcmp(p.code, code) == 0) {
+    while (fread(&p, sizeof(Product), 1, fp) == 1)
+    {
+        if (strcmp(p.code, code) == 0)
+        {
             *out = p;
             fclose(fp);
             return 1;
@@ -29,13 +35,17 @@ int getProduct(const char *code, Product *out) {
     return 0;
 }
 
-int updateProductQty(const char *code, int newQty) {
+int updateProductQty(const char *code, int newQty)
+{
     FILE *fp = fopen("inventory.dat", "rb+");
-    if (fp == NULL) return 0;
+    if (fp == NULL)
+        return 0;
 
     Product p;
-    while (fread(&p, sizeof(Product), 1, fp) == 1) {
-        if (strcmp(p.code, code) == 0) {
+    while (fread(&p, sizeof(Product), 1, fp) == 1)
+    {
+        if (strcmp(p.code, code) == 0)
+        {
             p.quantity = newQty;
             fseek(fp, -sizeof(Product), SEEK_CUR);
             fwrite(&p, sizeof(Product), 1, fp);
@@ -47,9 +57,11 @@ int updateProductQty(const char *code, int newQty) {
     return 0;
 }
 
-int getProductCount() {
+int getProductCount()
+{
     FILE *fp = fopen("inventory.dat", "rb");
-    if (fp == NULL) return 0;
+    if (fp == NULL)
+        return 0;
 
     fseek(fp, 0, SEEK_END);
     long size = ftell(fp);
@@ -57,30 +69,37 @@ int getProductCount() {
     return (int)(size / sizeof(Product));
 }
 
-int getAllProducts(Product *out, int max) {
+int getAllProducts(Product *out, int max)
+{
     FILE *fp = fopen("inventory.dat", "rb");
-    if (fp == NULL) return 0;
+    if (fp == NULL)
+        return 0;
 
     int count = 0;
-    while (count < max && fread(&out[count], sizeof(Product), 1, fp) == 1) {
+    while (count < max && fread(&out[count], sizeof(Product), 1, fp) == 1)
+    {
         count++;
     }
     fclose(fp);
     return count;
 }
 
-void generateCode(char *outCode) {
+void generateCode(char *outCode)
+{
     FILE *fp = fopen("inventory.dat", "rb");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         strcpy(outCode, "PRD001");
         return;
     }
 
     int maxNum = 0;
     Product p;
-    while (fread(&p, sizeof(Product), 1, fp) == 1) {
+    while (fread(&p, sizeof(Product), 1, fp) == 1)
+    {
         int num = atoi(p.code + 3);
-        if (num > maxNum) maxNum = num;
+        if (num > maxNum)
+            maxNum = num;
     }
     fclose(fp);
 
@@ -88,9 +107,11 @@ void generateCode(char *outCode) {
     sprintf(outCode, "PRD%03d", maxNum);
 }
 
-void appendLog(const char *action, const char *code, int qty) {
+void appendLog(const char *action, const char *code, int qty)
+{
     FILE *fp = fopen("transactions.log", "a");
-    if (fp == NULL) return;
+    if (fp == NULL)
+        return;
 
     time_t t = time(NULL);
     struct tm *tmInfo = localtime(&t);
@@ -101,15 +122,18 @@ void appendLog(const char *action, const char *code, int qty) {
     fclose(fp);
 }
 
-void viewLog() {
+void viewLog()
+{
     FILE *fp = fopen("transactions.log", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         printf("No transactions recorded.\n");
         return;
     }
 
     char line[256];
-    while (fgets(line, sizeof(line), fp) != NULL) {
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
         printf("%s", line);
     }
     fclose(fp);
