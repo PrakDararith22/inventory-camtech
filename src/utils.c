@@ -16,3 +16,12 @@ void readString(const char *prompt, char *out, int maxLen) {
     }
 }
 
+
+void toLowerCase(const char *src, char *dst) {
+    while (*src) {
+        *dst = tolower((unsigned char)*src);
+        src++;
+        dst++;
+    }
+    *dst = '\0';
+}
