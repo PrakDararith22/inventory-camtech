@@ -25,3 +25,21 @@ int getProduct(const char *code, Product *out) {
     }
     fclose(fp);
     return 0;
+
+    int updateProductQty(const char *code, int newQty) {
+    FILE *fp = fopen("inventory.dat", "rb+");
+    if (fp == NULL) return 0;
+
+    Product p;
+    while (fread(&p, sizeof(Product), 1, fp) == 1) {
+        if (strcmp(p.code, code) == 0) {
+            p.quantity = newQty;
+            fseek(fp, -sizeof(Product), SEEK_CUR);
+            fwrite(&p, sizeof(Product), 1, fp);
+            fclose(fp);
+            return 1;
+        }
+    }
+    fclose(fp);
+    return 0;
+}
