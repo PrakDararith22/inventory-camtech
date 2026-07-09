@@ -445,7 +445,7 @@ If the user enters non-numeric input for the menu choice, an error message is sh
 |------|--------|
 | Problem statement | In README.md |
 | Algorithm and pseudocode | In this document |
-| Flowchart | Separate image or hand-drawn |
+| Flowchart | [flowcharts.md](flowcharts.md) — per-user Mermaid diagrams |
 | Menu-driven C program | Multiple source files as described above |
 | At least five meaningful functions | More than twenty total across all features |
 | Use of array and structure | Product structure and array in get all products |
