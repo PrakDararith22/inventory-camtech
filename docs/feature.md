@@ -439,163 +439,117 @@ If the user enters non-numeric input for the menu choice, an error message is sh
 
 ---
 
-## User Flowcharts
+# Inventory Management System Flowchart
 
-Flowcharts for each team member's feature area. Each diagram shows the
-control flow of the primary menu-driven tasks owned by that user.
-
-### Thina — FR1: Database SDK (file_db)
-
-Owns all binary I/O on `inventory.dat`.
+## Main Flow
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{Operation?}
-    B -->|Insert| C[Open inventory.dat append]
-    C --> D[fwrite Product record]
-    D --> E[Return 1 if written else 0]
-    B -->|Get by code| F[Open inventory.dat read]
-    F --> G{Read record}
-    G -->|match code| H[Copy to out, return 1]
-    G -->|no more records| I[Return 0]
-    G -->|next| G
-    B -->|Update qty| J[Open inventory.dat r+]
-    J --> K{Read record}
-    K -->|match code| L[Seek back one record]
-    L --> M[Overwrite quantity]
-    M --> N[Return 1]
-    K -->|no more records| O[Return 0]
-    K -->|next| K
-    B -->|Get all| P[Open inventory.dat read]
-    P --> Q[Read up to max into array]
-    Q --> R[Return count read]
+    A["Start"] --> B["Show menu"]
+    B --> C{"Choose option"}
+    C -->|1| D["Add Product"]
+    C -->|2| E["Stock In"]
+    C -->|3| F["Stock Out"]
+    C -->|4| G["Search Product"]
+    C -->|5| H["Low Stock Report"]
+    C -->|6| I["Inventory Value"]
+    C -->|7| J["View Audit Log"]
+    C -->|8| K["Exit"]
+
+    D --> B
+    E --> B
+    F --> B
+    G --> B
+    H --> B
+    I --> B
+    J --> B
 ```
 
-### Lida — FR2: Add Product
-
-Owns product creation, code generation, and audit append.
+## Add Product Flow
 
 ```mermaid
 flowchart TD
-    A[Add Product selected] --> B[Generate next code PRDxxx]
-    B --> C[Display generated code]
-    C --> D{Prompt name}
-    D -->|empty| D
-    D --> E{Prompt quantity}
-    E -->|negative| E
-    E --> F{Prompt price}
-    F -->|not positive| F
-    F --> G{Prompt min stock}
-    G -->|negative| G
-    G --> H[Build Product struct]
-    H --> I[FR1 insert product]
-    I --> J[Append audit log ADD]
-    J --> K[Print success/failure]
+    A["Start Add Product"] --> B["Generate product code"]
+    B --> C["Enter product name"]
+    C --> D["Enter quantity"]
+    D --> E["Enter price"]
+    E --> F["Enter minimum stock"]
+    F --> G["Save product to file"]
+    G --> H["Write audit log"]
+    H --> I["Return to menu"]
 ```
 
-### Samrith — FR3: Stock In / Stock Out
-
-Owns stock movement and product counting.
+## Stock In Flow
 
 ```mermaid
 flowchart TD
-    A{Stock In or Out?} -->|Stock In| B[Prompt code]
-    A -->|Stock Out| C[Prompt code]
-    B --> D[FR1 get product]
-    C --> D
-    D -->|not found| Z[Print Product not found, return]
-    D -->|found| E[Show current quantity]
-    E --> F{Prompt qty}
-    F -->|not positive| F
-    F -->|Stock Out and qty > stock| G[Print Insufficient stock, repeat]
-    G --> F
-    F --> H[newQty = qty +/- entered]
-    H --> I[FR1 update quantity]
-    I --> J[Append audit log IN/OUT]
-    J --> K[Print updated quantity]
+    A["Start Stock In"] --> B["Enter product code"]
+    B --> C{"Product found?"}
+    C -->|No| D["Show product not found"]
+    C -->|Yes| E["Enter quantity to add"]
+    E --> F["Update stock"]
+    F --> G["Write audit log"]
+    G --> H["Return to menu"]
+    D --> H
 ```
 
-### Kelly — FR4: Search & Audit Log
-
-Owns search by code/name and audit log viewing.
+## Stock Out Flow
 
 ```mermaid
 flowchart TD
-    A[Search Product selected] --> B{Search by code or name?}
-    B -->|Code| C[Prompt code]
-    C --> D[FR1 get by code]
-    D -->|found| E[Display product table]
-    D -->|not found| F[Print Product not found]
-    B -->|Name| G[Prompt partial name]
-    G --> H[FR1 get all products]
-    H --> I[Lowercase term + names]
-    I --> J{Match?}
-    J -->|yes| K[Display product table]
-    J -->|no matches| L[Print No matching products]
-    M[View Audit Log selected] --> N[Open transactions.log]
-    N -->|missing| O[Print No transactions recorded]
-    N -->|exists| P[Print each line]
+    A["Start Stock Out"] --> B["Enter product code"]
+    B --> C{"Product found?"}
+    C -->|No| D["Show product not found"]
+    C -->|Yes| E["Enter quantity to remove"]
+    E --> F{"Enough stock?"}
+    F -->|No| G["Show stock error"]
+    F -->|Yes| H["Update stock"]
+    H --> I["Write audit log"]
+    I --> J["Return to menu"]
+    G --> J
+    D --> J
 ```
 
-### Lado — FR5: Reports & Build
-
-Owns low-stock report, inventory value, audit viewer UI, and build system.
+## Search Product Flow
 
 ```mermaid
 flowchart TD
-    A{Report type?} -->|Low Stock| B[FR1 get all products]
-    A -->|Inventory Value| C[FR1 get all products]
-    A -->|View Audit Log| D[FR4 view audit log]
-    B -->|empty| E[Print message, return]
-    B -->|has data| F[Print table, flag qty < min]
-    C -->|empty| G[Print message, return]
-    C -->|has data| H[Print qty x price table + grand total]
-    H --> I[Print low-stock warnings]
-    D --> J[Display log to console]
+    A["Start Search"] --> B{"Search by code or name"}
+    B -->|Code| C["Enter code"]
+    B -->|Name| D["Enter name"]
+    C --> E["Find product"]
+    D --> F["Search all products"]
+    E --> G{"Found?"}
+    F --> H{"Match found?"}
+    G -->|Yes| I["Display product"]
+    G -->|No| J["Show not found"]
+    H -->|Yes| K["Display matches"]
+    H -->|No| L["Show no matches"]
+    I --> M["Return to menu"]
+    J --> M
+    K --> M
+    L --> M
 ```
 
-### Rith — FR6: Main Menu & Integration
-
-Owns program entry point, menu loop, and shared headers.
+## Reports Flow
 
 ```mermaid
 flowchart TD
-    A[Program start] --> B[Print banner with members]
-    B --> C[Display menu 1-8]
-    C --> D[Read choice]
-    D -->|not 1-8| E[Print Invalid choice, repeat]
-    E --> C
-    D -->|1| F[FR2 add product]
-    D -->|2| G[FR3 stock in]
-    D -->|3| H[FR3 stock out]
-    D -->|4| I[FR4 search]
-    D -->|5| J[FR5 low stock]
-    D -->|6| K[FR5 inventory value]
-    D -->|7| L[FR5 view audit log]
-    D -->|8| M[Exit]
-    F --> C
-    G --> C
-    H --> C
-    I --> C
-    J --> C
-    K --> C
-    L --> C
+    A["Start Report"] --> B["Read all products"]
+    B --> C{"Report type"}
+    C -->|Low Stock| D["Find items below minimum stock"]
+    C -->|Inventory Value| E["Calculate total value"]
+    D --> F["Display low stock report"]
+    E --> G["Display inventory value"]
+    F --> H["Return to menu"]
+    G --> H
 ```
 
----
+## Audit Log Flow
 
-## Deliverables
-
-| Item | Status |
-|------|--------|
-| Problem statement | In README.md |
-| Algorithm and pseudocode | In this document |
-| Flowchart | Per-user Mermaid diagrams in the User Flowcharts section above |
-| Menu-driven C program | Multiple source files as described above |
-| At least five meaningful functions | More than twenty total across all features |
-| Use of array and structure | Product structure and array in get all products |
-| File handling for persistence | Binary data file and text audit log |
-| Input validation | All numeric and text inputs validated with re-prompting |
-| Auto-generated product codes | PRD001, PRD002 format via code generator |
-| Program screenshots | To be captured |
-| Final presentation and demo | To be scheduled |
+```mermaid
+flowchart TD
+    A["Start Audit Log"] --> B["Read transaction log"]
+    B --> C["Display log"]
+    C --> D["Return to menu"]
+```
