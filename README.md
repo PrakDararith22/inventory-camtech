@@ -6,8 +6,9 @@ A console-based C application to manage product stock-in/stock-out, monitor low-
 
 ## Documentation
 
-- [feature.md](feature.md) — Feature requirements, task distribution, and user flow
-- [CONVENTIONS.md](CONVENTIONS.md) — Branching strategy, naming conventions, commit format, code style
+- [docs/feature.md](docs/feature.md) — Feature requirements, task distribution, and user flow
+- [docs/CONVENTIONS.md](docs/CONVENTIONS.md) — Branching strategy, naming conventions, commit format, code style
+- [docs/flowcharts.md](docs/flowcharts.md) — Per-user flowcharts (Thina, Lida, Samrith, Kelly, Lado, Rith)
 
 ## Build Instructions
 
