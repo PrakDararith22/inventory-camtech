@@ -58,5 +58,7 @@ void searchProduct() {
         if (!found) {
             printf("No matching products found.\n");
         }
+        
     }
+
 }
