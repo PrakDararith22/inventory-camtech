@@ -4,5 +4,9 @@
 #include "inventory.h"
 
 int insertProduct(Product *p);
+int getProduct(const char *code, Product *out);
+int getAllProducts(Product *out, int max);
+int updateProductQty(const char *code, int newQty);
+int getProductCount();
 
 #endif
