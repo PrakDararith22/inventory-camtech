@@ -61,4 +61,5 @@ void stockOut() {
     updateProductQty(p.code, p.quantity);
     appendLog("STOCK_OUT", p.code, qty);
     printf("Stock out successful! Remaining: %d\n", p.quantity);
+    
 }
