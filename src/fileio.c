@@ -17,6 +17,7 @@
  */
 
 #include "fileio.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +31,27 @@ int insertProduct(Product *p) {
   int written = fwrite(p, sizeof(Product), 1, fp);
   fclose(fp);
   return written == 1;
+}
+
+int productNameExists(const char *name) {
+  FILE *fp = fopen("inventory.dat", "rb");
+  if (fp == NULL)
+    return 0;
+
+  char inputLower[NAME_LEN];
+  toLowerCase(name, inputLower);
+
+  Product p;
+  while (fread(&p, sizeof(Product), 1, fp) == 1) {
+    char storedLower[NAME_LEN];
+    toLowerCase(p.name, storedLower);
+    if (strcmp(storedLower, inputLower) == 0) {
+      fclose(fp);
+      return 1;
+    }
+  }
+  fclose(fp);
+  return 0;
 }
 int getProduct(const char *code, Product *out) {
   FILE *fp = fopen("inventory.dat", "rb");

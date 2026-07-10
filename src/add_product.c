@@ -33,8 +33,15 @@ void addProduct() {
 
     while (1) {
         readString("Enter product name: ", p.name, NAME_LEN);
-        if (p.name[0] != '\0') break;
-        printf("Name cannot be empty.\n");
+        if (p.name[0] == '\0') {
+            printf("Name cannot be empty.\n");
+            continue;
+        }
+        if (productNameExists(p.name)) {
+            printf("A product with that name already exists.\n");
+            continue;
+        }
+        break;
     }
 
     while (1) {
