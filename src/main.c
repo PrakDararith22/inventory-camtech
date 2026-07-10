@@ -1,3 +1,33 @@
+/**
+ * @file    main.c
+ * @author  Prak Dararith
+ * @author  Thina
+ * @author  Kelly
+ * @author  Lida
+ * @author  Lado Ponn
+ * @author  Samrith
+ * @version v1.0
+ * @date    9-July-2026
+ * @brief   Inventory Management System.
+ *
+ * This program is a console-based inventory management system developed
+ * using the C programming language. It allows staff to manage product
+ * inventory efficiently by providing the following features:
+ *
+ * - Add new products.
+ * - Stock in and stock out products.
+ * - Search products by code or name.
+ * - Generate low stock and inventory value reports.
+ * - View audit log for all transactions.
+ *
+ * The system uses a binary file (inventory.dat) for persistent storage
+ * and a transaction log (transactions.log) for auditing purposes.
+ *
+ * @attention
+ * This project was developed as part of the Computer Fundamental course
+ * at CamTech University.
+ */
+
 #include <stdio.h>
 #include "add_product.h"
 #include "stock.h"

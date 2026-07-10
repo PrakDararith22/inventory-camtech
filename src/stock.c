@@ -1,3 +1,19 @@
+/**
+ * @file    stock.c
+ * @author  samrith
+ * @version v1.0
+ * @date    9-July-2026
+ * @brief   Stock in and stock out operations.
+ *
+ * Implements adding stock to (stock in) and removing stock from
+ * (stock out) existing products, updating the stored quantities and
+ * recording each movement in the transaction log.
+ *
+ * @attention
+ * This project was developed as part of the Computer Fundamental course
+ * at CamTech University.
+ */
+
 #include <stdio.h>
 #include "stock.h"
 #include "fileio.h"

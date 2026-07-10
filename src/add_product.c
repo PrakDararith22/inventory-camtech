@@ -1,3 +1,19 @@
+/**
+ * @file    add_product.c
+ * @author  Lida
+ * @version v1.0
+ * @date    9-July-2026
+ * @brief   Add new products to the inventory.
+ *
+ * Provides functionality for creating and inserting new products into
+ * the inventory, including automatic code generation and persistence to
+ * the data file via the file I/O module.
+ *
+ * @attention
+ * This project was developed as part of the Computer Fundamental course
+ * at CamTech University.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include "add_product.h"

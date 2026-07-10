@@ -1,3 +1,16 @@
+/**
+ * @file    fileio.h
+ * @author  Lida
+ * @author  thina
+ * @version v1.0
+ * @date    9-July-2026
+ * @brief   Header for inventory file I/O operations.
+ *
+ * @attention
+ * This project was developed as part of the Computer Fundamental course
+ * at CamTech University.
+ */
+
 #ifndef FILEIO_H
 #define FILEIO_H
 

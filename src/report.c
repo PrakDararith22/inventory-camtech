@@ -1,3 +1,19 @@
+/**
+ * @file    report.c
+ * @author  Lado Ponn
+ * @version v1.0
+ * @date    9-July-2026
+ * @brief   Inventory reporting features.
+ *
+ * Generates reports for the inventory system, including a low-stock
+ * report that highlights products below their reorder threshold and a
+ * report of the total inventory value.
+ *
+ * @attention
+ * This project was developed as part of the Computer Fundamental course
+ * at CamTech University.
+ */
+
 #include <stdio.h>
 #include "report.h"
 #include "fileio.h"
